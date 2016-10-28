@@ -7,7 +7,6 @@
 //
 
 #import "JMDTools.h"
-
 @implementation JMDTools
 static JMDTools *_install = nil;
 /**
@@ -42,79 +41,46 @@ static JMDTools *_install = nil;
 + (void)NSUserDefaultsSet:(id)data forKey:(NSString *)Key
 {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:data forKey:Key];
-    [defaults synchronize];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:data forKey:Key];
+//    [defaults synchronize];
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:GroupItemID];
+    [userDefaults setValue: data forKey:Key];
 }
 //偏好设置中读取变量
 + (id)NSUserDefaultsget:(NSString *)key
 {
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    return [defaults objectForKey:key];
+
     
-    
-    //初始化一个供App Groups使用的NSUserDefaults对象
-//    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.cn.vimfung.ShareExtensionDemo"];
-//    
-//    //写入数据
-//    [userDefaults setValue:@"value" forKey:@"key"];
-//    
-    
-    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.legend.shareShow"];
-//    [userDefaults setValue: ((NSURL *)item).absoluteString forKey:@"share-url"];
-//    //用于标记是新的分享
-//    [userDefaults setBool:YES forKey:@"has-new-share"];
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:GroupItemID];
+
     return [userDefaults objectForKey:key];
 }
 
 //文件复制
-+ (BOOL)CopyFileOrgFileName:(NSString *)oName NewFileName:(NSString *)Nname
+//文件复制
++ (BOOL)CopyFileOrgFileName:(NSString *)srcPath
 {
-    NSString *srcPath=oName;
-    NSString *tarPath=Nname;
+    //    NSString *srcPath=oName;
+    NSString * tempFileName = [srcPath lastPathComponent];
+    NSString *groupURL = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *fileNameNew = [groupURL stringByAppendingPathComponent:tempFileName];
+
     
-    NSFileManager *fileManager=[NSFileManager defaultManager];
-    BOOL success=[fileManager createFileAtPath:tarPath contents:nil attributes:nil];
-    if (success) {
-        NSLog(@"文件创建成功");
+    
+    
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.legend.shareShow"];
+    [userDefaults setValue: tempFileName forKey:@"share-name"];
+    
+    
+    
+    
 
-           NSData *imageDataOrigin = [NSData dataWithContentsOfFile:oName];
-        NSLog(@"%@",oName);
-        NSFileHandle *inFile=[NSFileHandle fileHandleForReadingAtPath:oName];
-//        [NSFileHandle fileHandleForReadingAtPath:srcPath];
-        NSFileHandle *outFile=[NSFileHandle fileHandleForWritingAtPath:tarPath];
-        
-        NSDictionary   *fileAttu=[fileManager attributesOfItemAtPath:srcPath error:nil];
-        NSNumber *fileSizeNum=[fileAttu objectForKey:NSFileSize];
-        
+    NSData *imageDataOrigin = [NSData dataWithContentsOfFile:srcPath];
+    
+    [imageDataOrigin writeToFile:fileNameNew atomically:YES];
 
-        int n=0;
-        
-        BOOL isEnd=YES;
-        NSInteger readSize=0;//已经读取的数量
-        NSInteger fileSize=[fileSizeNum longValue];//文件的总长度
-        while (isEnd) {
-            
-
-            
-            NSInteger subLength=fileSize-readSize;
-            NSData *data=nil;
-            if (subLength<5000) {
-                isEnd=NO;
-                data=[inFile readDataToEndOfFile];
-            }else{
-                data=[inFile readDataOfLength:5000];
-                readSize+=5000;
-                [inFile seekToFileOffset:readSize];
-            }
-            [outFile writeData:data];
-            n++;
-        }
-        
-        [inFile closeFile];
-        [outFile closeFile];
-    }
-
+    
     return YES;
 }
 

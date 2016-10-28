@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "shareZcq/ShareViewController.m"
-            timestampString = "499242622.41063"
+            filePath = "shareShow/ViewController.m"
+            timestampString = "499332098.843764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "-didSelectPost"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shareZcq/ShareViewController.m"
-            timestampString = "499242857.098731"
+            timestampString = "499332219.830467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-didSelectPost"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "-CopyFileOrgFileName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,28 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shareShow/JMDTools.m"
-            timestampString = "499251389.761879"
+            timestampString = "499333155.211852"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "+CopyFileOrgFileName:NewFileName:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "shareShow/ViewController.m"
-            timestampString = "499252839.440963"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "+CopyFileOrgFileName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

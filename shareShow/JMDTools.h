@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#define GroupItemID @"group.legend.shareShow"
 
 
 @interface JMDTools : NSObject
@@ -14,5 +15,5 @@
 +(void)NSUserDefaultsSet:(id)data forKey:(NSString *)Key;
 +(id)NSUserDefaultsget:(NSString *)key;
 //文件复制
-+ (BOOL)CopyFileOrgFileName:(NSString *)oName NewFileName:(NSString *)Nname;
++ (BOOL)CopyFileOrgFileName:(NSString *)srcPath;
 @end

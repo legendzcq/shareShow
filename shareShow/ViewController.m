@@ -11,10 +11,10 @@
 
 @interface ViewController ()
 {
-    NSArray *arrayOfDocuments;
+
     NSURL *fileRUL;
 }
-@property (nonatomic, strong)QLPreviewController *QLPreVC;
+
 @property (nonatomic, strong)UIDocumentInteractionController *documentController;
 
 @end
@@ -23,57 +23,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-//    _QLPreVC=[QLPreviewController new];
-//    
-//    _QLPreVC.dataSource=self;
-//    
-//    _QLPreVC.delegate=self;
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor redColor];
 
+   
     
-    
-    NSString * tempabc =[JMDTools NSUserDefaultsget:@"share-url"];
-//    NSString * filenameabc = [tempabc lastPathComponent];
-//    
-    NSLog(@"%@",tempabc);
-//
+//    NSString * tempabc =[JMDTools NSUserDefaultsget:@"share-url"];
+//    NSLog(@"%@",tempabc);
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    　NSString *fileNameOld = [path stringByAppendingPathComponent:@"极密宝系统架构设计文档.DOCX"];
-    　NSString *fileNameNew = [path stringByAppendingPathComponent:@"123.DOCX"];
-    NSLog(@"%@",fileNameOld);
-//    NSLog(@"%@",fileNameNew);
+//    NSLog(@"%@",path);
+//    [JMDTools NSUserDefaultsSet:path forKey:@"DocumetID"];
+//    NSString *fileNameOld = [path stringByAppendingPathComponent:@"极密宝系统架构设计文档.docx"];
+//    　NSString *fileNameNew = [path stringByAppendingPathComponent:@"123.docx"];
+//    NSLog(@"%@",fileNameOld);
     
-    
-    
-    
-
+//       ImageValue
 
     
     
     
-//    [JMDTools CopyFileOrgFileName:fileNameOld NewFileName:fileNameNew];
+    NSString * tempname = [JMDTools NSUserDefaultsget:@"share-name"];
+
+    NSString * newfilename = [path stringByAppendingPathComponent:tempname];
     
+    NSURL *groupURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:GroupItemID];
+    NSString * tempgroupURL =[NSString stringWithFormat:@"%@/%@",groupURL.path,[JMDTools NSUserDefaultsget:@"share-name"]];
+//    ？[groupURL.path stringByAppendingPathComponent:tempname];
+    NSLog(@"%@",groupURL);
+    NSLog(@"%@",tempgroupURL);
+    NSURL *fileURL = [NSURL fileURLWithPath:tempgroupURL];
+    NSLog(@"%@",fileURL);
+ 
+    [JMDTools CopyFileOrgFileName:tempgroupURL];
     
-    
-    
-    
+
     //创建实例
-//    NSLog(@"%@",[NSURL URLWithString:tempabc]);
-    UIDocumentInteractionController *documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL URLWithString:tempabc]];
+ 
+    UIDocumentInteractionController *documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newfilename]];
     self.documentController = documentController;
     documentController.delegate = self;
+//           [self deleteFile:tempgroupURL];
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 //代理方法
 - (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
@@ -94,11 +90,29 @@
 
 
 - (IBAction)btnccc:(id)sender {
-//        [self presentViewController:_QLPreVC animated:YES completion:nil];
+
     
     [_documentController presentPreviewAnimated:YES];
-//    [self presentViewController:_documentController animated:YES completion:nil];
 
+
+}
+
+-(BOOL) deleteFile:(NSString *)fileName
+{
+    if (fileName == nil) {
+        return false;
+    }
+    
+    NSError *error = nil;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    if (fileManager != nil) {
+        BOOL result = [fileManager removeItemAtPath:fileName error:&error];
+        if (result != YES) {
+            return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 @end
